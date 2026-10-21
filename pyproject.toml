@@ -1,0 +1,82 @@
+[project]
+name = "f1"
+version = "0.1.0"
+description = "Dashboard de Fórmula 1 (Streamlit + Plotly) com dados da API OpenF1"
+authors = [
+    {name = "Alana Ramos",email = "alanaribeiroramos@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "httpx (>=0.28.1,<0.29.0)",
+    "streamlit (>=1.66.0,<2.0.0)",
+    "plotly (>=7.1.0,<8.0.0)",
+    "pandas (>=3.0.6,<4.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "f1", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.17.1,<0.18.0)",
+    "taskipy (>=1.14.1,<2.0.0)"
+]
+test = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "pytest-cov (>=7.1.0,<8.0.0)"
+]
+docs = [
+    "mkdocs (>=1.6.1,<2.0.0)",
+    "mkdocs-material (>=9.7.7,<10.0.0)"
+]
+
+[tool.taskipy.tasks]
+lint = { cmd = "ruff check . && ruff format --check .", help = "Verifica lint e formatação (sem alterar arquivos)" }
+format = { cmd = "ruff check . --fix && ruff format .", help = "Corrige lint automático e formata o código" }
+test = { cmd = "pytest", help = "Roda os testes com cobertura (mínimo de 50%)" }
+docs = { cmd = "mkdocs build --strict", help = "Compila a documentação (falha em avisos)" }
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle (erros)
+    "W",   # pycodestyle (avisos)
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["f1"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = [
+    "--cov=f1",
+    "--cov-report=term-missing",
+    "--cov-fail-under=50",
+]
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
