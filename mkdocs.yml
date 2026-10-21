@@ -1,0 +1,24 @@
+site_name: F1 Dashboard
+site_description: Dashboard de Fórmula 1 com dados da API OpenF1
+docs_dir: docs
+strict: true
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.sections
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Início: index.md
+  - Instalação: instalacao.md
+  - Uso: uso.md
+  - Desenvolvimento: desenvolvimento.md
+  - Arquitetura: arquitetura.md
